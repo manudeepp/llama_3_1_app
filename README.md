@@ -51,8 +51,8 @@ Below is the configuration of the system used to run this application:
 
 1. Clone the Repository
     ```sh
-    git clone https://github.com/yourusername/llama-3.1-chat.git
-    cd llama-3.1-chat
+    git clone https://github.com/manudeepp/llama_3_1_app.git
+    cd llama_3_1_app
     ```
 2. Create and Activate a Virtual Environment
     ```sh
@@ -64,7 +64,7 @@ Below is the configuration of the system used to run this application:
     pip install -r requirements.txt
     ```
 4. Install Llama 3.1 using Ollama
-    Follow the instructions on the Ollama website to install Ollama. After installing Ollama, download and install Llama 3.1 with the following command:
+    Follow the instructions on the [Ollama website](https://ollama.com/library/llama3.1) to install Ollama. After installing Ollama, download and install Llama 3.1 with the following command:
     ```sh
     ollama install llama3.1
     ```
@@ -73,8 +73,8 @@ Below is the configuration of the system used to run this application:
 
 1. Clone the Repository
     ```sh
-    git clone https://github.com/yourusername/llama-3.1-chat.git
-    cd llama-3.1-chat
+    git clone https://github.com/manudeepp/llama_3_1_app.git
+    cd llama_3_1_app
     ```
 2. Create and Activate a Virtual Environment
     ```sh
@@ -86,7 +86,7 @@ Below is the configuration of the system used to run this application:
     pip install -r requirements.txt
     ```
 4. Install Llama 3.1 using Ollama
-    Follow the instructions on the Ollama website to install Ollama. After installing Ollama, download and install Llama 3.1 with the following command:
+    Follow the instructions on the [Ollama website](https://ollama.com/library/llama3.1) to install Ollama. After installing Ollama, download and install Llama 3.1 with the following command:
     ```sh
     ollama install llama3.1
     ```
@@ -104,7 +104,7 @@ Below is the configuration of the system used to run this application:
 ngrok allows you to expose a local server to the internet securely. Follow the steps below to set up ngrok:
 
 1. Download ngrok
-    Visit the ngrok website and download the appropriate version for your operating system.
+    Visit the [ngrok](https://ngrok.com/) website and download the appropriate version for your operating system.
 
 2. Install ngrok
     Follow the installation instructions provided on the ngrok website.
