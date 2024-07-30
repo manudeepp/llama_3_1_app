@@ -66,7 +66,7 @@ Below is the configuration of the system used to run this application:
 4. Install Llama 3.1 using Ollama
     Follow the instructions on the [Ollama website](https://ollama.com/library/llama3.1) to install Ollama. After installing Ollama, download and install Llama 3.1 with the following command:
     ```sh
-    ollama install llama3.1
+    ollama pull llama3.1
     ```
 
 ### Windows
@@ -88,7 +88,7 @@ Below is the configuration of the system used to run this application:
 4. Install Llama 3.1 using Ollama
     Follow the instructions on the [Ollama website](https://ollama.com/library/llama3.1) to install Ollama. After installing Ollama, download and install Llama 3.1 with the following command:
     ```sh
-    ollama install llama3.1
+    ollama pull llama3.1
     ```
 
 ## Running the Application
