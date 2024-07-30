@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');</style>
+    <title>Llama 3.1 Chat</title>
+    <style>
+        body {
+            font-family: Montserrat;
+            margin: 0;
+            padding: 5px; /* 5px padding on top and bottom */
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 10px); /* Subtracting padding from viewport height */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: #444;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 50px); /* 50px for input-box and padding */
+        }
+
+        .conversation {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .conversation .message {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+        }
+        .conversation .message p {
+            margin: 0;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 70%;
+            background-color: #2c3e50;
+        }
+        .conversation .user p {
+            background-color: rgba(0, 128, 0, 0.2); /* Faded background */
+            text-align: left;
+            order: 0;
+        }
+        .conversation .llama p {
+            background-color: transparent; /* No background */
+            color: #ffffff; /* Change text color to differentiate */
+        }
+        .conversation .user img,
+        .conversation .llama img {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+        .user {
+            justify-content: flex-end;
+        }
+        .llama {
+            justify-content: flex-start;
+        }
+        .input-box {
+            display: flex;
+        }
+        .input-box input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .input-box button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .typing {
+            display: none;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .typing img {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+        .typing span {
+            background-color: transparent; /* Faded background */
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .dot {
+            height: 8px;
+            width: 8px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            animation: blink 1.4s infinite both;
+        }
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes blink {
+            0%, 80%, 100% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Llama Chat 3.1</h1>
+        <div class="conversation" id="conversation">
+            {% for message in conversation_history %}
+                {% if "User" in message %}
+                    <div class="message user"><p>{{ message.split(": ")[1] }}</p><img src="/static/user-icon.png" alt="User"></div>
+                {% else %}
+                    <div class="message llama"><img src="/static/llama-logo.png" alt="Llama"><div>{{ message.split(": ")[1]|safe }}</div></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="typing" id="typing">
+            <img src="/static/llama-logo.png" alt="Llama">
+            <span>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </span>
+        </div>
+        <div class="input-box">
+            <input type="text" id="input-text" placeholder="Type your message..." required>
+            <button type="button" id="send-button">Send</button>
+        </div>
+        <form method="POST" action="{{ url_for('clear') }}">
+            <button type="submit" style="margin-top: 10px;">Clear Conversation</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function showTyping() {
+                document.getElementById('typing').style.display = 'flex';
+            }
+
+            function hideTyping() {
+                document.getElementById('typing').style.display = 'none';
+            }
+
+            async function sendMessage() {
+                const inputBox = document.getElementById('input-text');
+                const text = inputBox.value;
+                if (!text) return;
+
+                const conversation = document.getElementById('conversation');
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.innerHTML = `<p>${text}</p><img src="/static/user-icon.png" alt="User">`;
+                conversation.appendChild(userMessage);
+                inputBox.value = '';
+
+                showTyping();
+
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                const data = await response.json();
+
+                hideTyping();
+
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message llama';
+                console.log("Raw AI output:", data.prediction)
+                aiMessage.innerHTML = `<img src="/static/llama-logo.png" alt="Llama"><div>${data.prediction}</div>`;
+                conversation.appendChild(aiMessage);
+
+                conversation.scrollTop = conversation.scrollHeight;
+            }
+
+            document.getElementById('input-text').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            document.getElementById('send-button').addEventListener('click', sendMessage);
+        });
+    </script>
+</body>
+</html>
