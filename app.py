@@ -28,7 +28,8 @@ def index():
                                    stdin=subprocess.PIPE, 
                                    stdout=subprocess.PIPE, 
                                    stderr=subprocess.PIPE, 
-                                   text=True)
+                                   text=True,
+                                   encoding='utf-8')  # Add encoding parameter
         
         # Send the prompt to the process
         stdout, stderr = process.communicate(input=prompt)
@@ -42,10 +43,8 @@ def index():
 
         if stderr:
             app.logger.error(f"Error from model: {stderr}")
-
-        # Convert Markdown to HTML
-        formatted_output = markdown.markdown(output)
-        return jsonify(prediction=formatted_output)
+        
+        return jsonify(prediction=markdown.markdown(output))
     
     return render_template('index.html', conversation_history=conversation_history)
 
