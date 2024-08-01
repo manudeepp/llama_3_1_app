@@ -104,7 +104,7 @@ Below is the configuration of the system used to run this application:
 ngrok allows you to expose a local server to the internet securely. Follow the steps below to set up ngrok:
 
 1. Download ngrok
-    Visit the [ngrok](https://ngrok.com/) website and download the appropriate version for your operating system.
+    Visit the [ngrok](https://dashboard.ngrok.com/get-started/setup/windows) website and download the appropriate version for your operating system.
 
 2. Install ngrok
     Follow the installation instructions provided on the ngrok website.
