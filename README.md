@@ -47,45 +47,28 @@ Below is the configuration of the system used to run this application:
 
 ## Setup
 
-### Linux
-
 1. Clone the Repository
     ```sh
     git clone https://github.com/manudeepp/llama_3_1_app.git
     cd llama_3_1_app
     ```
 2. Create and Activate a Virtual Environment
-    ```sh
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
-3. Install Dependencies
-    ```sh
-    pip install -r requirements.txt
-    ```
-4. Install Llama 3.1 using Ollama
-    Follow the instructions on the [Ollama website](https://ollama.com/library/llama3.1) to install Ollama. After installing Ollama, download and install Llama 3.1 with the following command:
-    ```sh
-    ollama pull llama3.1
-    ```
-
-### Windows
-
-1. Clone the Repository
-    ```sh
-    git clone https://github.com/manudeepp/llama_3_1_app.git
-    cd llama_3_1_app
-    ```
-2. Create and Activate a Virtual Environment
-    ```sh
-    python -m venv venv
-    venv\Scripts\activate
-    ```
-3. Install Dependencies
+   
+      For Windows
+      ```sh
+      python -m venv venv
+      venv\Scripts\activate
+      ```
+      For Linux
+      ```sh
+      python -m venv venv
+      source venv/bin/activate
+      ```
+4. Install Dependencies
     ```sh
     pip install -r requirements.txt
     ```
-4. Install Llama 3.1 using Ollama
+5. Install Llama 3.1 using Ollama
     Follow the instructions on the [Ollama website](https://ollama.com/library/llama3.1) to install Ollama. After installing Ollama, download and install Llama 3.1 with the following command:
     ```sh
     ollama pull llama3.1
